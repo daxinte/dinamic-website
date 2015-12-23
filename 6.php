@@ -1,0 +1,4 @@
+html
+<?
+session_start();
+?>
