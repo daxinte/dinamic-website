@@ -6,6 +6,35 @@ include("meniu.php");
 ?>
 <td valign="top">
 <h1>Prima pagina</h1>
+
+<p>Promotii</p>	
+<table cellpadding="5">
+<tr>
+<?php 
+$sql = "SELECT id_carte, titlu, nume_autor, pret FROM carti, autori WHERE carti.id_autor=autori.id_autor ORDER BY data DESC LIMIT 0,3";
+$resursa = mysql_query($sql) or die(mysql_error());
+while ($row = mysql_fetch_array($resursa)) {
+	print '<td align ="center">';
+	$adresaImagine = "coperte".$row['id_carte'].".jpg";
+	if (file_exists($adresaImagine)) {
+		print '<img src="'.$adresaImagine.'"width = "75" height = "100"><br>';
+	}
+		else
+			{
+				print '<div style = "width:75px; height:100px;border:1px black solid; background-color:#cccccc">Fara imagine</div>';
+			}
+			    print '<b><a href="carte.php?id_carte='.$row['id_carte'].'">'.$row['titlu'].'</a></b><br> de <i>'.$row['nume_autor'].'</i><br>
+				Pret: '.$row['pret'].' lei
+				</td>';
+ 	}
+ ?>
+</tr>	
+
+
+
+</table>
+<hr>
+
 <p>Cele mai noi carti</p>	
 <table cellpadding="5">
 <tr>

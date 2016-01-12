@@ -1,13 +1,21 @@
+<?php
+$id_domeniu=isset($_POST['id_domeniu'])?$_POST['id_domeniu']:null;
+?>
 <td valign="top" width="125">
+
 <div>
 <b>Alege domeniul</b>	
 <?php
-	$sql = "SELECT * FROM domenii ORDER BY nume_domeniu ASC";
-	$resursa = mysql_query($sql);
+	//$sql = "SELECT * FROM domenii ORDER BY nume_domeniu ASC";
+	
+	//$sql = "SELECT domenii.id_domeniu, domenii.nume_domeniu, COUNT(id_carte) as nr_carti from domenii, carti where carti.id_domeniu = domenii.id_domeniu GROUP BY domenii.id_domeniu";
+	$sql = "SELECT d.id_domeniu, d.nume_domeniu, COUNT(c.id_carte) as nr_carti FROM domenii d LEFT JOIN carti c ON c.id_domeniu = d.id_domeniu GROUP BY d.id_domeniu";
+
+	$resursa = mysql_query($sql) or die(mysql_error());
 	while($row = mysql_fetch_array($resursa)) {
 		// echo "<pre>";
 		// print_r($row);
-		print'<a href="domeniu.php?id_domeniu='.$row['id_domeniu'].'">'.$row['nume_domeniu'].'</a><br>';
+		print'<a href="domeniu.php?id_domeniu='.$row['id_domeniu'].'">'.$row['nume_domeniu'].' ('.$row['nr_carti'].')</a><br>';
 	}
 
 ?>

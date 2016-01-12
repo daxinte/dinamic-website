@@ -13,6 +13,7 @@ $numeDomeniu = mysql_result($resursaNumeDomeniu, 0,'nume_domeniu');
 <b>Carti in domeniu</b>
 <u><i><?=$numeDomeniu?></i></u>:</b>
 <table cellpadding="5">
+
 <?php
 $rec_limit = 2;
 
@@ -90,10 +91,20 @@ if ($page>1)
 }
 
 
-for ($i=1; $i<=$num_page; $i++) { 
-            echo "<a href='domeniu.php?id_domeniu=$id_domeniu&page=".$i."'>".$i."</a> "; 
-}; 
-if ($page<$num_page) {
+for ($i=1; $i<=$num_page; $i++) 
+{ 
+	if ($page==$i) 
+			
+			{
+            	echo " <b>$i</b> "; 
+            }
+            else { echo "<a href='domeniu.php?id_domeniu=$id_domeniu&page=".$i."'>".$i."</a> ";}
+
+           
+
+};
+if ($page<$num_page) 
+{
 	echo "<a href='domeniu.php?id_domeniu=$id_domeniu&page=$num_page'>".'>|'."</a> "; // Goto last page
 	}
 
@@ -115,4 +126,21 @@ if ($page<$num_page) {
 		//		            print "<a href = \"domeniu.php?id_domeniu=$id_domeniu&page=$next\">Next 2 Records</a>";
 		//		         }
 
+?>
+<form action="domeniu.php" method="POST">
+	<table>
+	<tr>
+		<td>
+			<select id= "rec_limit" name = 'rec_limit' style = 'position: relative' value="">
+				  <option value="1">1</option>
+				  <option value="2" selected="selected">2</option>
+				  <option value="3">3</option>
+			</select>
+		</td>
+	</tr>
+</table>
+</form>
+
+<?php
+$rec_limit=isset($_POST['rec_limit'])?$_POST['rec_limit']:null;
 ?>
